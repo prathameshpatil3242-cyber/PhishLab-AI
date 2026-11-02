@@ -1,0 +1,63 @@
+{# Shared left-hand marketing panel for the login / sign-up split layout. #}
+{% set eyebrow   = eyebrow   | default('Security awareness platform') %}
+{% set headline  = headline  | default('Turn every inbox into a <span class="grad-text">training ground</span>.') %}
+{% set lead      = lead      | default('PhishLab AI scores suspicious messages and URLs, runs safe simulations and shows exactly where your team needs coaching — all from one dashboard.') %}
+
+<aside class="sell-panel">
+  <div class="sell-glow" aria-hidden="true"></div>
+  <div class="sell-inner">
+    <span class="pill pill-lime">{{ eyebrow }}</span>
+    <h2 class="sell-title">{{ headline | safe }}</h2>
+    <p class="sell-lead">{{ lead }}</p>
+
+    <ul class="sell-points">
+      <li>
+        <span class="tick" aria-hidden="true">&#10003;</span>
+        <div>
+          <strong>Explainable detection</strong>
+          <p>47 weighted signals — sender, headers, urgency, brand abuse, URLs — never a black box.</p>
+        </div>
+      </li>
+      <li>
+        <span class="tick" aria-hidden="true">&#10003;</span>
+        <div>
+          <strong>Safe simulations</strong>
+          <p>Launch awareness campaigns with fictional scenarios. Nothing is ever sent to a real inbox.</p>
+        </div>
+      </li>
+      <li>
+        <span class="tick" aria-hidden="true">&#10003;</span>
+        <div>
+          <strong>Team readiness score</strong>
+          <p>Quizzes, trends and per-user progress turn awareness into a metric you can report.</p>
+        </div>
+      </li>
+    </ul>
+
+    <div class="sell-stats" aria-label="Product highlights">
+      <div class="sell-stat">
+        <b class="count" data-count-to="47">0</b>
+        <span>detection signals</span>
+      </div>
+      <div class="sell-stat">
+        <b class="count" data-count-to="6">0</b>
+        <span>attack categories</span>
+      </div>
+      <div class="sell-stat">
+        <b class="count" data-count-to="100" data-suffix="%">0</b>
+        <span>on-premise</span>
+      </div>
+    </div>
+
+    <figure class="sell-quote">
+      <blockquote>&ldquo;We stopped guessing which emails were dangerous. The team can finally see <em>why</em> something is risky — that is what changed behaviour.&rdquo;</blockquote>
+      <figcaption>
+        <span class="user-avatar" aria-hidden="true">A</span>
+        <span>
+          <strong>Security lead</strong>
+          <em class="muted">mid-size services firm · pilot deployment</em>
+        </span>
+      </figcaption>
+    </figure>
+  </div>
+</aside>

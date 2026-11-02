@@ -1,0 +1,100 @@
+id,text,label
+p001,"From: security@paypa1-verify.com | Subject: Urgent: your account will be suspended | Dear customer, verify your password within 24 hours or your account will be closed. Click here to verify now.",phishing
+p002,From: alerts@amaz0n-billing.net | Subject: Unusual sign-in detected | We detected unauthorized activity on your account. Confirm your identity by entering your password at the link below immediately.,phishing
+p003,Congratulations! You have won a free gift card. Claim your prize now by confirming your bank account number and paying the small processing fee.,phishing
+p004,From: it-helpdesk@tkiet-support.xyz | Subject: Password expires today | Your mailbox password expires today. Reply with your current password and one-time code to keep your account active.,phishing
+p005,"Dear user, your account has been locked due to suspicious login. Act now and re-verify your identity within 12 hours to avoid permanent suspension.",phishing
+p006,From: no-reply@micr0soft-security.com | Subject: Final warning | Your subscription will be cancelled. Update your billing information and credit card number immediately to avoid legal action.,phishing
+p007,URGENT: Your parcel could not be delivered. Pay the tiny customs fee using a gift card and enter your tracking details on our secure page.,phishing
+p008,From: bank-alerts@sbi-secure-login.top | Subject: Unusual transaction | We noticed an unusual transaction on your bank account. Confirm your OTP and PIN by replying to this message within 6 hours.,phishing
+p009,"Dear account holder, verify your account to prevent closure. Click the link and enter your login details: http://192.168.5.10/account/verify",phishing
+p010,This is your final warning. Failure to respond will lead to legal action. Wire the outstanding amount immediately using the instructions attached.,phishing
+p011,From: support@flipkart-prize.com | Subject: You are selected! | You are selected for a cash prize. Do not tell anyone. Pay the refundable tax fee through gift cards to claim your reward.,phishing
+p012,"Hello, please open the attached invoice and enable macros to view it. This is time sensitive and must be completed today.",phishing
+p013,From: accounts@appleid-secure-update.com | Subject: Verify your Apple ID | Your Apple ID will be disabled. Confirm your identity by updating your information and sharing your verification code with our team.,phishing
+p014,"Dear customer, we need to re-verify your identity. Send your social security number and date of birth so we can process your request quickly.",phishing
+p015,Your mailbox is full. Sign in at hxxp://secure-login.example-verify.xyz/mail to confirm your password and restore access immediately.,phishing
+p016,"From: hr@recruitment-scam.info | Subject: Job offer, high salary | You have been selected for a high paying job. Transfer the registration fee via western union to complete your onboarding.",phishing
+p017,"Attention: your refund of 8,500 is pending. Confirm your bank account number and card CVV so we can release the payment today.",phishing
+p018,From: delivery@corier-parcel.net | Subject: Delivery failed | Your parcel is on hold. Click here to update your address and pay the processing fee within 24 hours or the parcel will be returned.,phishing
+p019,"Dear valued customer, unusual activity was found on your wallet. Verify your crypto wallet seed phrase immediately to secure your funds.",phishing
+p020,From: secure@0ffice365-login.top | Subject: Session expired | Your session has expired. Re-enter your username and password on this page to continue working. Do not inform anyone about this notice.,phishing
+p021,You have won the weekly lottery! Claim your cash prize before it expires. Enter your UPI id and pay the release fee to receive your money.,phishing
+p022,From: billing@netfIix-renew.com | Subject: Payment declined | Your subscription is suspended. Update your credit card number now to avoid service interruption within 24 hours.,phishing
+p023,Please confirm your identity by clicking the verification link below and entering your one-time verification code. Failure to respond will suspend your access.,phishing
+p024,From: admin@account-locked.info | Subject: Account locked | Your account will be closed permanently. Reply with your password and date of birth to restore it immediately.,phishing
+p025,Urgent action required: your invoice attachment contains a payment request. Open the attached zip file and enable content to view the details.,phishing
+p026,From: security@0ffice-update.xyz | Subject: Software update | Download the attached update file and install it now to keep your account secure. This is a mandatory security check.,phishing
+p027,"Dear user, we noticed login from a new device. Confirm your identity at our verification page within 6 hours or your access will be revoked.",phishing
+p028,From: wallet@bl0ckchain-secure.com | Subject: Suspicious transaction | Your crypto wallet is locked. Send your recovery phrase and verification code to our support team immediately.,phishing
+p029,"Congratulations, you are the winner of today's jackpot. Do not share this message with anyone. Pay the small tax fee using a gift card to claim the cash prize.",phishing
+p030,From: notices@tax-refund-office.com | Subject: Tax refund pending | Your tax refund is pending approval. Enter your bank account number and OTP on the linked page to receive your refund today.,phishing
+p031,Your password reset request was received. Confirm your new password by replying directly to this email with your current password for verification.,phishing
+p032,From: support@amaz0n-parcel.info | Subject: Package held | We could not deliver your package. Verify your account and pay the fee using the secure link before the deadline expires.,phishing
+p033,"Dear account holder, unusual ATM activity was detected. Transfer your balance to the safe account provided below immediately to protect your money.",phishing
+p034,"From: team@company-hr-mail.com | Subject: Salary revision | Please open the attached spreadsheet, enable macros and enter your login credentials to view the revised salary sheet.",phishing
+p035,Your account details need updating. Failure to respond within 12 hours will lead to suspension. Click the link and enter your card details.,phishing
+p036,From: verify@googIe-security.top | Subject: Security alert | A new sign-in was detected. Re-verify your Google account by entering your password and recovery email on our page.,phishing
+p037,You are selected for a special reward. Keep this confidential and pay the processing fee through bitcoin to claim your prize before midnight.,phishing
+p038,From: invoice@payment-due.net | Subject: Overdue payment | An overdue invoice is attached. Pay immediately by bank transfer to avoid legal action against your company.,phishing
+p039,"Hello user, your KYC document is expired. Submit your Aadhaar number, date of birth and a copy of your ID on the linked portal immediately.",phishing
+p040,From: helpdesk@company-it-secure.com | Subject: Mailbox quota exceeded | Your mailbox quota is exceeded. Confirm your identity by sending your password to the helpdesk so we can increase the quota.,phishing
+p041,Your shipment is stuck at customs. Pay the customs tax with a gift card and confirm your address details within 24 hours to release it.,phishing
+p042,From: alert@secure-paypal-login.top | Subject: Limited access | Your access is limited until you verify. Login using the link and confirm your password and security question.,phishing
+p043,"Attention customer, your KYC will be deactivated. Enter your PIN and OTP on the verification page to reactivate your account today.",phishing
+p044,From: rewards@prize-draw.xyz | Subject: Prize notification | You have won a free laptop. Do not inform anyone and pay the shipping charge through our payment link to receive it.,phishing
+p045,"Please review the attached contract and enable macros, then re-enter your password so the document can be signed digitally today.",phishing
+p046,From: security-check@account-suspended.com | Subject: Account suspended | Your account has been suspended for unusual activity. Reply with your OTP and password to restore full access.,phishing
+p047,Urgent: your card is blocked due to unusual ATM usage. Transfer all funds to the secure holding account given in the attachment immediately.,phishing
+p048,From: notice@lottery-head-office.com | Subject: Lottery win | Your email address was selected in our ballot draw. Pay the processing fee by wire transfer to claim your winnings this week.,phishing
+p049,"Dear user, your mailbox will be closed. Confirm your password and secondary email on the linked page within 6 hours to keep it active.",phishing
+p050,From: billing@0nline-bank-secure.com | Subject: Online banking alert | We detected a login attempt from an unknown device. Verify your net banking user id and password immediately.,phishing
+p051,"Your invoice is attached as a password protected file. The password is your date of birth, please reply to confirm and open it now.",phishing
+l001,"From: notices@tkiet.example.edu | Subject: Semester timetable published | Dear student, the timetable for the next semester has been published on the college portal. Please check it and report any clash to the office.",legitimate
+l002,"Hi Ananya, thanks for attending the workshop yesterday. The slides are attached for your reference. Let me know if you have questions.",legitimate
+l003,"From: news@opensource.example.org | Subject: Monthly newsletter | This month we shipped three new features, fixed twelve bugs and welcomed four contributors. Read the full changelog on our blog.",legitimate
+l004,Your order has shipped. Track your parcel using the link in your account page. Delivery is expected in three to five working days.,legitimate
+l005,From: hr@tkiet.example.edu | Subject: Placement drive schedule | The placement drive for final year students starts on Monday at 9 AM in the seminar hall. Bring two copies of your resume.,legitimate
+l006,"Hello team, the meeting has been moved to 4 PM. Please update your calendar. The conference room link is already in the invitation.",legitimate
+l007,From: support@github.example | Subject: Your support ticket #1042 was updated | A support agent replied to your ticket. View the response by signing in to your account through the official website.,legitimate
+l008,Thank you for your payment of 499. Your receipt is attached. No action is needed from your side.,legitimate
+l009,From: library@tkiet.example.edu | Subject: Book return reminder | The book 'Computer Networks' is due for return on Friday. You can renew it once from the library portal.,legitimate
+l010,"Hi, please find attached the assignment feedback. Overall good work; review section 3 before the next submission.",legitimate
+l011,"Your password was changed successfully on a new device. If this was not you, reset your password from the security page of our official app.",legitimate
+l012,From: events@tkiet.example.edu | Subject: Tech fest registrations open | Registrations for the annual tech fest are now open. Teams of up to four members can register on the student portal.,legitimate
+l013,Weekly progress summary: you completed four exercises and scored 80 percent. Keep practising the awareness quizzes.,legitimate
+l014,From: noreply@bank.example | Subject: Monthly statement | Your monthly account statement is ready. View it by opening our official mobile app and navigating to statements.,legitimate
+l015,Reminder: your library fine of 20 rupees can be paid at the counter. No online payment is required.,legitimate
+l016,Hi! Sharing the notes from today's lecture. Please read chapter two before the next class.,legitimate
+l017,From: updates@weather.example | Subject: Rain expected tomorrow | Light to moderate rain is expected tomorrow afternoon. Carry an umbrella if you are commuting.,legitimate
+l018,Your appointment with the doctor has been confirmed for Thursday at 11 AM. Please arrive ten minutes early.,legitimate
+l019,From: security@tkiet.example.edu | Subject: Lab safety guidelines | Please follow the lab safety guidelines while using the equipment. Report any issue to the lab assistant immediately.,legitimate
+l020,Thanks for your feedback on the survey. We have recorded your responses and will publish the summary next week.,legitimate
+l021,Your subscription renews automatically on the first of next month. You can manage or cancel it any time from your account settings page.,legitimate
+l022,From: courier@parcel.example | Subject: Delivery attempted | We attempted delivery today and will try again tomorrow between 10 AM and 2 PM.,legitimate
+l023,Hello! Your study group session is scheduled for Saturday at 6 PM in the reading room. See you there.,legitimate
+l024,From: notices@tkiet.example.edu | Subject: Exam hall allotment | Exam hall allotments are now visible on the portal. Please verify your roll number and reach the hall thirty minutes early.,legitimate
+l025,We received your application. Our team will review it and get back to you within a week. No further action is needed now.,legitimate
+l026,Your free trial ends in three days. Upgrade from your account page if you wish to continue using the service.,legitimate
+l027,From: teacher@tkiet.example.edu | Subject: Project guidelines | Please follow the project guidelines document shared in the class group and submit the abstract by the end of this month.,legitimate
+l028,Thank you for joining our community. Here are three tips to get started with your new account.,legitimate
+l029,Your table is reserved for 7:30 PM tonight. We look forward to welcoming you.,legitimate
+l030,From: feedback@tkiet.example.edu | Subject: Course feedback form | Please fill in the course feedback form before the end of the week. Your responses are anonymous.,legitimate
+l031,Reminder: the library will close early on Saturday at 4 PM. Plan your visits accordingly.,legitimate
+l032,Your parcel was delivered and signed for at the reception. Thank you for shopping with us.,legitimate
+l033,"Hi colleague, could you review my pull request when you have time? No rush, it can wait until Monday.",legitimate
+l034,From: notices@tkiet.example.edu | Subject: Scholarship applications | Scholarship applications for this academic year are open. Eligible students can apply through the student portal.,legitimate
+l035,Your two-factor authentication backup codes have been regenerated. Store them somewhere safe.,legitimate
+l036,Class has been cancelled tomorrow due to maintenance work. The next session will continue as scheduled.,legitimate
+l037,From: accounts@library.example | Subject: New arrivals | Twelve new titles on ethical hacking and network security have been added to the collection.,legitimate
+l038,Your feedback ticket has been closed. You can reopen it from the help centre if the issue persists.,legitimate
+l039,"Morning everyone, the stand-up has been moved to 10:15. Same meeting link as before.",legitimate
+l040,From: notices@tkiet.example.edu | Subject: Fee receipt | Your fee payment for this term has been recorded. The receipt is available in the student portal.,legitimate
+l041,Thanks for the order! Your invoice is attached for your records.,legitimate
+l042,Please find the minutes of yesterday's meeting attached. Add your comments before Friday.,legitimate
+l043,From: support@domain.example | Subject: Domain renewal reminder | Your domain expires next month. Renew it from your account dashboard to avoid interruption.,legitimate
+l044,Your request to download your data archive has been approved. The archive will be available for seven days.,legitimate
+l045,Hello! A quick note that tomorrow's webinar starts 30 minutes earlier than usual.,legitimate
+l046,From: lab@tkiet.example.edu | Subject: Lab batch allotment | Lab batches for this week are announced. Check the notice board for your slot and instructor name.,legitimate
+l047,We have updated our privacy policy. The summary of changes is on our blog; you can review the full document any time.,legitimate
+l048,Your bus pass has been renewed for one month. The digital pass is now active in your account.,legitimate

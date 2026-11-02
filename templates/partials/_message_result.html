@@ -1,0 +1,68 @@
+{# Shared result block used by the server-rendered form AND the JavaScript fetch. #}
+{% set r = result.rules %}
+{% set ml = result.ml %}
+
+<p class="result-headline {{ 'is-bad' if 'suspicious' in result.headline else ('is-warn' if 'review' in result.headline else 'is-ok') }}">
+  {{ result.headline }}
+</p>
+<p class="muted small">Engine used: <strong>{{ result.engine }}</strong> · {{ result.note }}</p>
+
+<div class="score-block">
+  <div class="score-meter">
+    <div class="score-meter-fill level-{{ r.risk_level|lower }}" style="width: {{ r.risk_score }}%"></div>
+  </div>
+  <div class="score-meta">
+    <strong>{{ r.risk_score }}/100</strong> · {{ r.risk_level }} risk
+    <span class="muted small">— educational heuristic, not a validated probability</span>
+  </div>
+</div>
+
+<details class="explain" open>
+  <summary>Why this result? (score calculation)</summary>
+  <p class="small">{{ r.score_explanation }}</p>
+  <p class="small muted">{{ r.summary }}</p>
+</details>
+
+<h3 class="sub-title">Risk indicators ({{ r.indicators|length }} of {{ r.checked_rules }} rules matched)</h3>
+{% if r.indicators %}
+<ul class="indicator-list">
+  {% for i in r.indicators %}
+  <li class="indicator">
+    <div class="indicator-top">
+      <span class="indicator-name">{{ i.name }}</span>
+      <span class="indicator-weight">+{{ i.weight }}</span>
+    </div>
+    <p class="small"><strong>Evidence:</strong> {{ i.evidence }}</p>
+    <p class="small muted">{{ i.description }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="muted small">No rule matched this message.</p>
+{% endif %}
+
+<h3 class="sub-title">Machine-learning prediction</h3>
+{% if ml.available %}
+<p class="small">Model says: <span class="chip chip-violet">{{ ml.label }}</span>
+   with confidence {{ (ml.confidence * 100)|round(1) }}%.</p>
+<ul class="prob-list">
+  {% for label, p in ml.probabilities.items() %}
+  <li><span>{{ label }}</span>
+    <div class="progress"><div class="progress-bar" style="width: {{ (p * 100)|round }}%"></div></div>
+    <span class="tiny">{{ (p * 100)|round(1) }}%</span></li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="small muted">{{ ml.error }}</p>
+<p class="small muted">{{ ml.note }}</p>
+{% endif %}
+<p class="tiny muted">A model prediction is fallible: a small fictional dataset was used for training.</p>
+
+<h3 class="sub-title">Recommended safe action</h3>
+<ul class="rec-list">
+  {% for rec in r.recommendations %}
+  <li>{{ rec }}</li>
+  {% endfor %}
+</ul>
+
+<p class="disclaimer">{{ r.disclaimer }}</p>

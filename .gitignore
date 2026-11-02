@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Local data (never commit)
+phishlab.db
+test_phishlab.db
+
+# Trained model artefacts (recreate with: python train_model.py)
+models/*.joblib
+models/metrics.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

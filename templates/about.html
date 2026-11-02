@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}About Project{% endblock %}
+{% block page_title %}About PhishLab AI{% endblock %}
+{% block page_subtitle %}<p class="muted">Educational phishing detection, simulation and awareness system</p>{% endblock %}
+
+{% block content %}
+<section class="grid-2">
+  <article class="card">
+    <h2 class="card-title">What this project is</h2>
+    <p class="small">
+      PhishLab AI is a local web application built for an SY B.Tech Cyber Security coursework
+      project at TKIET Warananagar. It analyses message text and URLs for phishing warning
+      signs, classifies sample messages with a small machine-learning model, and runs safe
+      awareness quizzes using fictional scenarios.
+    </p>
+    <p class="small">
+      Everything runs on your own computer: Flask serves the pages, SQLite stores the local
+      records, and scikit-learn provides the TF-IDF + Naive Bayes classifier.
+    </p>
+
+    <h3 class="sub-title">Technology stack</h3>
+    <div class="chip-row">
+      <span class="chip">Python 3.13+</span><span class="chip">Flask</span>
+      <span class="chip">scikit-learn</span><span class="chip">pandas</span>
+      <span class="chip">NumPy</span><span class="chip">SQLite</span>
+      <span class="chip">HTML5 / CSS3 / JS</span><span class="chip">Chart.js</span>
+      <span class="chip">pytest</span>
+    </div>
+
+    <h3 class="sub-title">Project files</h3>
+    <ul class="file-list small">
+      <li><code>app.py</code> — Flask application, all routes and APIs</li>
+      <li><code>config.py</code> — paths, limits and safe defaults</li>
+      <li><code>database.py</code> — SQLite init / clear helper</li>
+      <li><code>analyzer.py</code> — rule-based message analysis (explainable)</li>
+      <li><code>train_model.py</code> — trains and evaluates the ML model</li>
+      <li><code>evaluate_model.py</code> — re-scores the saved model on held-out data</li>
+      <li><code>phishlab/</code> — the Python package with the logic modules</li>
+      <li><code>data/sample_messages.csv</code> — fictional labelled dataset</li>
+      <li><code>templates/</code>, <code>static/</code> — pages, CSS and JavaScript</li>
+      <li><code>tests/</code> — pytest test suite</li>
+    </ul>
+  </article>
+
+  <article class="card">
+    <h2 class="card-title">Ethics and safety rules</h2>
+    <ul class="rec-list">
+      <li>Only fictional messages, synthetic participants and <code>.test</code>/<code>.example</code> domains are used.</li>
+      <li>No phishing e-mail is ever sent and no credentials are ever collected.</li>
+      <li>Submitted URLs are read as text only — they are never opened or resolved.</li>
+      <li>Submitted message content is never executed or uploaded anywhere.</li>
+      <li>All data stays in a local SQLite file on this computer.</li>
+      <li>No real organisation is impersonated for harmful purposes.</li>
+      <li>No API keys, tokens or personal information are included in the project.</li>
+    </ul>
+
+    <h3 class="sub-title">Honest limitations</h3>
+    <ul class="bullets small">
+      <li>The dataset is small and fictional, so the reported accuracy does not reflect real-world performance.</li>
+      <li>Rule-based scores are heuristics — they are explainable, but they are not probabilities.</li>
+      <li>A result of “no obvious indicators” never proves that a message is safe.</li>
+      <li>Modern phishing can avoid every keyword rule; always verify with the official channel.</li>
+    </ul>
+  </article>
+</section>
+{% endblock %}

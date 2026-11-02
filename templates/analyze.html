@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Analyze Message{% endblock %}
+{% block page_title %}Analyze Message{% endblock %}
+{% block page_subtitle %}<p class="muted">Rule engine + optional ML model · the message is never executed or sent anywhere</p>{% endblock %}
+
+{% block content %}
+<section class="grid-2 grid-analysis">
+  <!-- ---------------- INPUT ---------------- -->
+  <article class="card">
+    <h2 class="card-title">Message text</h2>
+    <p class="muted small">Paste a fictional or real-looking e-mail/message below. Only text analysis is performed.</p>
+
+    <form method="post" action="{{ url_for('analyze_page') }}" id="analyzeForm" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label class="field">
+        <span class="field-label">E-mail or message text</span>
+        <textarea name="message" id="messageInput" rows="10" maxlength="20000"
+          placeholder="From: security@paypa1-verify.com&#10;Subject: Urgent: your account will be suspended&#10;&#10;Dear customer, verify your password within 24 hours …"
+          required>{{ text }}</textarea>
+        <span class="field-hint"><span id="charCount">0</span> / 20,000 characters</span>
+      </label>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" type="submit">Analyze message</button>
+        <button class="btn btn-ghost" type="button" id="clearBtn">Clear</button>
+      </div>
+    </form>
+
+    <div class="samples">
+      <p class="field-label">Load a sample (safe, fictional)</p>
+      <div class="btn-row">
+        <button class="btn btn-chip" type="button" data-sample="phish">Suspicious sample</button>
+        <button class="btn btn-chip" type="button" data-sample="legit">Ordinary sample</button>
+      </div>
+    </div>
+  </article>
+
+  <!-- ---------------- RESULT ---------------- -->
+  <article class="card result-card">
+    <h2 class="card-title">Analysis result</h2>
+
+    {% if error %}
+    <div class="flash flash-error" role="alert">{{ error }}</div>
+    {% endif %}
+
+    <div id="resultPanel" aria-live="polite">
+      {% if result %}
+        {% include "partials/_message_result.html" %}
+      {% else %}
+        <div class="empty-state" id="emptyState">
+          <p class="empty-ico" aria-hidden="true">&#9888;</p>
+          <p>No analysis yet. Paste a message and press <strong>Analyze message</strong>.</p>
+          <p class="muted small">The result will show the predicted category, each risk indicator,
+            an explanation and a safe recommended action.</p>
+        </div>
+      {% endif %}
+    </div>
+  </article>
+</section>
+
+<section class="card callout">
+  <h2 class="card-title">How to read this page</h2>
+  <ul class="bullets">
+    <li><strong>Potentially suspicious</strong> — several strong warning signs matched. Treat it as hostile until verified.</li>
+    <li><strong>Needs manual review</strong> — some signs matched, or the rule engine and the model disagree. Check it yourself.</li>
+    <li><strong>No obvious phishing indicators</strong> — nothing strong was found. <em>That never proves a message is safe.</em></li>
+    <li>The risk score is an <strong>educational heuristic</strong> (sum of fixed rule weights, capped at 100) — not a probability that an attack is happening.</li>
+  </ul>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/analyzer.js') }}"></script>
+{% endblock %}

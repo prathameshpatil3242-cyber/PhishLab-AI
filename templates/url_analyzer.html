@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}URL Analyzer{% endblock %}
+{% block page_title %}URL Analyzer{% endblock %}
+{% block page_subtitle %}<p class="muted">Reads the URL as plain text — it is never visited, resolved or fetched</p>{% endblock %}
+
+{% block content %}
+<section class="grid-2 grid-analysis">
+  <article class="card">
+    <h2 class="card-title">URL to inspect</h2>
+    <p class="muted small">Type or paste an address. The tool only looks at the characters in the address.</p>
+
+    <form method="post" action="{{ url_for('url_page') }}" id="urlForm" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label class="field">
+        <span class="field-label">Website address</span>
+        <input type="text" name="url" id="urlInput" maxlength="2048" spellcheck="false"
+               placeholder="http://192.168.10.44/verify/account/login" value="{{ url }}" required>
+        <span class="field-hint">Malformed addresses are rejected. Example: https://example.org/login</span>
+      </label>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" type="submit">Analyze URL</button>
+        <button class="btn btn-ghost" type="button" id="clearUrlBtn">Clear</button>
+      </div>
+    </form>
+
+    <div class="samples">
+      <p class="field-label">Try a sample</p>
+      <div class="btn-row">
+        <button class="btn btn-chip" type="button" data-url="http://192.168.10.44/verify/account">IP-host URL</button>
+        <button class="btn btn-chip" type="button" data-url="https://secure-paypal.login.verify-account.top/session">Lookalike domain</button>
+        <button class="btn btn-chip" type="button" data-url="https://tkiet.example.edu/notice">Ordinary URL</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="card result-card">
+    <h2 class="card-title">Preliminary assessment</h2>
+
+    {% if error %}
+    <div class="flash flash-error" role="alert">{{ error }}</div>
+    {% endif %}
+
+    <div id="urlResultPanel" aria-live="polite">
+      {% if result %}
+        {% include "partials/_url_result.html" %}
+      {% else %}
+        <div class="empty-state" id="urlEmptyState">
+          <p class="empty-ico" aria-hidden="true">&#8599;</p>
+          <p>No URL analysed yet.</p>
+          <p class="muted small">Checks include: URL length, IP-address hosts, misleading domain
+            structure, excessive subdomains, odd ports and unusual encoding.</p>
+        </div>
+      {% endif %}
+    </div>
+  </article>
+</section>
+
+<section class="card callout">
+  <h2 class="card-title">Safety rules built into this tool</h2>
+  <ul class="bullets">
+    <li>The submitted address is <strong>never opened</strong> — no HTTP request, no DNS lookup, no download.</li>
+    <li>A URL containing an IP address is a <em>warning sign</em>, not automatic proof of phishing.</li>
+    <li><strong>HTTPS is not proof of safety</strong> — phishing sites also use https://.</li>
+    <li>The score is an educational heuristic over fixed checks, capped at 100.</li>
+  </ul>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/analyzer.js') }}"></script>
+{% endblock %}

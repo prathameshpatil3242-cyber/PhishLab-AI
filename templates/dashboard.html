@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Security Awareness Overview{% endblock %}
+{% block page_subtitle %}<p class="muted">Local statistics calculated from this computer's database</p>{% endblock %}
+
+{% block content %}
+{% set s = stats %}
+
+{% if not current_user.is_authenticated %}
+<!-- ============ AUTH CTA (prominent, front page) ============ -->
+<section class="card auth-hero">
+  <div class="auth-hero-text">
+    <p class="kpi-label">New here?</p>
+    <h2 class="auth-hero-title">Create a free account or log in to get started</h2>
+    <p class="muted">
+      Keep your message analyses, URL checks and quiz results tied to your own profile.
+      You can also sign in instantly with your Google account — no extra password to remember.
+    </p>
+  </div>
+  <div class="auth-hero-actions">
+    <a class="btn btn-primary" href="{{ url_for('signup_page') }}">Sign up — it's free</a>
+    <a class="btn btn-lime" href="{{ url_for('login_page') }}">Log in</a>
+    <a class="btn btn-google" href="{{ url_for('auth_google') }}">
+      <svg class="google-ico" viewBox="0 0 24 24" aria-hidden="true" width="18" height="18">
+        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/>
+        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18A10.96 10.96 0 0 0 1 12c0 1.77.43 3.45 1.18 4.94l3.66-2.84z"/>
+        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.16-3.16C17.45 2.1 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84C6.71 7.3 9.14 5.38 12 5.38z"/>
+      </svg>
+      Continue with Google
+    </a>
+  </div>
+</section>
+{% else %}
+<section class="card auth-welcome">
+  <p class="kpi-label">Signed in as {{ current_user.display_name() }}</p>
+  <h2 class="auth-hero-title">Welcome back, {{ current_user.display_name() }}!</h2>
+  <p class="muted small">You are signed in with {{ 'Google' if current_user.provider == 'google' else 'your e-mail and password' }} ({{ current_user.email }}).</p>
+</section>
+{% endif %}
+
+<!-- ============ KPI CARDS ============ -->
+<section class="kpi-grid" aria-label="Key figures">
+  <article class="card kpi">
+    <p class="kpi-label">Total messages analyzed</p>
+    <p class="kpi-value">{{ s.total_analyses }}</p>
+    <p class="kpi-sub muted">{{ s.live_analyses }} by you · {{ s.demo_analyses }} demo</p>
+  </article>
+
+  <article class="card kpi">
+    <p class="kpi-label">Flagged for review</p>
+    <p class="kpi-value warn">{{ s.flagged }}</p>
+    <p class="kpi-sub muted">{{ s.needs_review }} need manual review</p>
+  </article>
+
+  <article class="card kpi">
+    <p class="kpi-label">Quizzes completed</p>
+    <p class="kpi-value">{{ s.completed_exercises }}</p>
+    <p class="kpi-sub muted">{{ s.quiz_answered_demo }} seeded demo answers</p>
+  </article>
+
+  <article class="card kpi">
+    <p class="kpi-label">Correct quiz answers</p>
+    <p class="kpi-value">{{ s.quiz_accuracy }}%</p>
+    <p class="kpi-sub muted">{{ s.quiz_correct }} correct of {{ s.quiz_answered_live }} live</p>
+  </article>
+</section>
+
+<!-- ============ AWARENESS SCORE ============ -->
+<section class="card score-card">
+  <div class="score-head">
+    <div>
+      <p class="kpi-label">Educational awareness score <span class="chip">heuristic</span></p>
+      <p class="score-big">{{ s.awareness_score }}<span>/100</span></p>
+      <p class="muted small">
+        Formula: 70% × live quiz accuracy + 30% × progress (10 exercises = full marks).
+        This is a classroom indicator, not a validated security rating.
+      </p>
+    </div>
+    <div class="score-ring" style="--p: {{ s.awareness_score }}" aria-hidden="true">
+      <span>{{ s.awareness_score }}%</span>
+    </div>
+  </div>
+  <div class="progress">
+    <div class="progress-bar" style="width: {{ s.awareness_score }}%"></div>
+  </div>
+</section>
+
+<!-- ============ CHARTS ============ -->
+<section class="grid-2">
+  <article class="card">
+    <h2 class="card-title">Common warning signs</h2>
+    <p class="muted small">How often each indicator appeared in stored analyses (demo + live).</p>
+    <div class="chart-box"><canvas id="indicatorChart" aria-label="Bar chart of common warning signs"></canvas></div>
+  </article>
+
+  <article class="card">
+    <h2 class="card-title">Training exercise outcomes</h2>
+    <p class="muted small">Fictional quiz answers recorded locally (correct vs incorrect).</p>
+    <div class="chart-box"><canvas id="outcomeChart" aria-label="Chart of training outcomes"></canvas></div>
+  </article>
+</section>
+
+<section class="grid-2">
+  <article class="card">
+    <h2 class="card-title">Analysis classifications</h2>
+    <p class="muted small">Distribution of rule-engine results over all stored analyses.</p>
+    <div class="chart-box chart-box-sm"><canvas id="classChart" aria-label="Classification distribution"></canvas></div>
+  </article>
+
+  <article class="card">
+    <h2 class="card-title">Suspicious indicators in test messages</h2>
+    <p class="muted small">Counts of indicator names found in the stored sample messages.</p>
+    <ul class="bar-list">
+      {% for item in s.common_indicators %}
+      <li>
+        <div class="bar-row">
+          <span class="bar-name">{{ item.name }}</span>
+          <span class="bar-count">{{ item.count }}</span>
+        </div>
+        <div class="progress">
+          <div class="progress-bar lime" style="width: {{ (item.count * 100 / (s.common_indicators[0].count or 1))|round }}%"></div>
+        </div>
+      </li>
+      {% else %}
+      <li class="empty">No indicators recorded yet — analyze a sample message first.</li>
+      {% endfor %}
+    </ul>
+  </article>
+</section>
+
+<!-- ============ CAMPAIGNS + ACTIVITY ============ -->
+<section class="grid-2">
+  <article class="card">
+    <div class="card-head">
+      <h2 class="card-title">Awareness campaigns</h2>
+      <a class="btn btn-ghost" href="{{ url_for('campaigns_page') }}">Manage</a>
+    </div>
+    <table class="table">
+      <thead><tr><th>Campaign</th><th>Status</th><th>Completed</th></tr></thead>
+      <tbody>
+        {% for row in campaign_rows %}
+        <tr>
+          <td>{{ row.name }}</td>
+          <td><span class="status status-{{ row.status|lower }}">{{ row.status }}</span></td>
+          <td>{{ row.completed }}/{{ row.participants or '—' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a class="btn btn-primary mt-3" href="{{ url_for('quiz_page') }}">Start an educational quiz</a>
+  </article>
+
+  <article class="card">
+    <div class="card-head">
+      <h2 class="card-title">Recent activity</h2>
+      <a class="btn btn-ghost" href="{{ url_for('history_page') }}">View all</a>
+    </div>
+    <ul class="activity-list">
+      {% for row in recent %}
+      <li>
+        <span class="act-dot {{ 'demo' if row.source == 'demo' else 'live' }}"></span>
+        <div>
+          <p class="act-title">{{ row.type }} · <code>{{ row.ref }}</code></p>
+          <p class="muted small">{{ row.result }}</p>
+        </div>
+        <time class="tiny muted">{{ row.created_at }}{% if row.source == 'demo' %} · demo{% endif %}</time>
+      </li>
+      {% else %}
+      <li class="empty">No activity recorded yet.</li>
+      {% endfor %}
+    </ul>
+  </article>
+</section>
+
+<!-- ============ MODEL CARD ============ -->
+<section class="card model-card">
+  <div class="card-head">
+    <h2 class="card-title">Machine learning model</h2>
+    {% if not model_status.trained %}
+    <button class="btn btn-lime" id="trainBtn" type="button">Train model now</button>
+    {% else %}
+    <span class="badge badge-lime">Trained {{ model_status.metrics.trained_at }}</span>
+    {% endif %}
+  </div>
+
+  {% if model_status.trained and model_status.metrics %}
+  <div class="metric-row">
+    <div class="metric"><span class="metric-v">{{ (model_status.metrics.accuracy * 100)|round(1) }}%</span><span class="metric-k">Accuracy</span></div>
+    <div class="metric"><span class="metric-v">{{ (model_status.metrics.precision_weighted * 100)|round(1) }}%</span><span class="metric-k">Precision (w)</span></div>
+    <div class="metric"><span class="metric-v">{{ (model_status.metrics.recall_weighted * 100)|round(1) }}%</span><span class="metric-k">Recall (w)</span></div>
+    <div class="metric"><span class="metric-v">{{ (model_status.metrics.f1_weighted * 100)|round(1) }}%</span><span class="metric-k">F1 (w)</span></div>
+    <div class="metric"><span class="metric-v">{{ model_status.metrics.test_samples }}</span><span class="metric-k">Held-out samples</span></div>
+  </div>
+  <p class="muted small">{{ model_status.metrics.caveat }}</p>
+  {% else %}
+  <p class="muted">
+    No trained model found. Run <code>python train_model.py</code> in the project folder,
+    or press <strong>Train model now</strong> above. The application keeps working with the
+    explainable rule engine while the model is missing.
+  </p>
+  {% endif %}
+  <p id="trainStatus" class="tiny muted" role="status"></p>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  window.PHISHLAB_STATS = {{ stats|tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

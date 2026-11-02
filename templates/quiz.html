@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}Awareness Quiz{% endblock %}
+{% block page_title %}Phishing Awareness Quiz{% endblock %}
+{% block page_subtitle %}<p class="muted">Fictional scenarios · opt-in · results stored locally only</p>{% endblock %}
+
+{% block content %}
+<section class="quiz-layout">
+  <!-- ---------------- QUIZ AREA ---------------- -->
+  <article class="card quiz-card">
+    {% if exercise %}
+      <div class="quiz-progress">
+        <div class="quiz-step">Exercise {{ quiz.index + 1 }} of {{ quiz.queue|length }}</div>
+        <div class="progress"><div class="progress-bar" style="width: {{ (quiz.index * 100 / quiz.queue|length)|round }}%"></div></div>
+        <div class="quiz-score lime-text">Score: {{ quiz.score|round(1) }} / {{ quiz.max|round(1) }}</div>
+      </div>
+
+      {% if feedback and feedback.details %}
+      <div class="feedback {{ 'is-good' if feedback.points >= feedback.max_points * 0.5 else 'is-bad' }}">
+        <p class="feedback-head">
+          {{ 'Correct!' if feedback.points >= feedback.max_points * 0.5 else 'Not quite.' }}
+          +{{ feedback.points }} / {{ feedback.max_points }} points
+        </p>
+        <p class="small">{{ feedback.exercise.explanation }}</p>
+        <ul class="rec-list small">
+          {% for tip in feedback.exercise.tips %}<li>{{ tip }}</li>{% endfor %}
+        </ul>
+        {% if feedback.details.signs %}
+        <p class="field-label">Warning signs review</p>
+        <ul class="sign-review">
+          {% for s in feedback.details.signs %}
+          <li class="{{ 'ok' if s.correct_choice else 'no' }} {{ 'picked' if s.selected }}">
+            <span aria-hidden="true">{{ '✓' if s.correct_choice else '✗' }}</span>
+            {{ s.text }}
+            {% if s.selected %}<span class="tiny">(you selected)</span>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <h2 class="card-title">{{ exercise.topic }}</h2>
+      <p class="chip-row"><span class="chip">{{ exercise.category }}</span>
+         <span class="chip chip-violet">fictional scenario</span></p>
+
+      <pre class="scenario">{{ exercise.message }}</pre>
+
+      <form method="post" action="{{ url_for('quiz_page') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="exercise_id" value="{{ exercise.id }}">
+
+        <fieldset class="field">
+          <legend class="field-label">{{ exercise.question }}</legend>
+          {% for option in exercise.options %}
+          <label class="option">
+            <input type="radio" name="answer_index" value="{{ loop.index0 }}" required>
+            <span>{{ option }}</span>
+          </label>
+          {% endfor %}
+        </fieldset>
+
+        <fieldset class="field">
+          <legend class="field-label">{{ exercise.sign_question }}</legend>
+          {% for opt in exercise.sign_options %}
+          <label class="option {{ 'is-correct-hidden' if false }}">
+            <input type="checkbox" name="signs" value="{{ loop.index0 }}">
+            <span>{{ opt.text }}</span>
+          </label>
+          {% endfor %}
+        </fieldset>
+
+        <button class="btn btn-primary" type="submit">Submit answer</button>
+      </form>
+
+    {% elif feedback and feedback.finished %}
+      <div class="finish-state">
+        <p class="empty-ico lime-text" aria-hidden="true">&#10003;</p>
+        <h2 class="card-title">Quiz finished</h2>
+        <p class="score-big">{{ quiz.score|round(1) }}<span>/{{ quiz.max|round(1) }}</span></p>
+        <p class="muted">
+          {% if quiz.max and (quiz.score / quiz.max) >= 0.8 %}
+            Excellent — you spotted almost every warning sign.
+          {% elif quiz.max and (quiz.score / quiz.max) >= 0.5 %}
+            Good work — review the explanations you missed and try again.
+          {% else %}
+            Keep practising — open the Learning Centre and retake the quiz.
+          {% endif %}
+        </p>
+        {% if quiz.campaign_name %}
+        <p class="small">Campaign completed locally: <strong>{{ quiz.campaign_name }}</strong>
+          (counter updated — no messages were sent).</p>
+        {% endif %}
+        <div class="btn-row mt-3">
+          <a class="btn btn-primary" href="{{ url_for('quiz_page', restart=1) }}">Restart quiz</a>
+          <a class="btn btn-ghost" href="{{ url_for('learning_page') }}">Back to Learning Centre</a>
+        </div>
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <p class="empty-ico" aria-hidden="true">&#10003;</p>
+        <p>The quiz queue is empty. Start it again to practise with the fictional scenarios.</p>
+        <a class="btn btn-primary mt-3" href="{{ url_for('quiz_page', restart=1) }}">Start quiz</a>
+      </div>
+    {% endif %}
+  </article>
+
+  <!-- ---------------- SIDE PANEL ---------------- -->
+  <aside class="quiz-side">
+    <article class="card">
+      <h2 class="card-title">Your session</h2>
+      <ul class="stat-list">
+        <li><span>Answered</span><strong>{{ quiz.answers|length }}</strong></li>
+        <li><span>Points</span><strong>{{ quiz.score|round(1) }}</strong></li>
+        <li><span>Maximum</span><strong>{{ quiz.max|round(1) }}</strong></li>
+        <li><span>Campaign</span><strong>{{ quiz.campaign_name or '—' }}</strong></li>
+      </ul>
+      <a class="btn btn-ghost btn-block" href="{{ url_for('quiz_page', restart=1) }}">Restart quiz</a>
+    </article>
+
+    <article class="card">
+      <h2 class="card-title">Exercises</h2>
+      <ul class="mini-list">
+        {% for e in exercises %}
+        <li class="{{ 'is-done' if loop.index0 < quiz.index }}">
+          <span>{{ e.topic }}</span>
+          <span class="tiny muted">{{ e.category }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      <a class="btn btn-ghost btn-block" href="{{ url_for('learning_page') }}">Learning Centre</a>
+    </article>
+
+    <article class="card">
+      <p class="tiny muted">Participant reference for this session:
+        <code>SYN-{{ participant_id }}</code></p>
+      <p class="tiny muted">Only synthetic participant IDs are used. No passwords or personal
+        data are stored anywhere.</p>
+    </article>
+  </aside>
+</section>
+{% endblock %}

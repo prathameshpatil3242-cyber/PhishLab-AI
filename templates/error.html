@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Error {{ code }}{% endblock %}
+{% block page_title %}Error {{ code }}{% endblock %}
+{% block page_subtitle %}<p class="muted">Something went wrong</p>{% endblock %}
+
+{% block content %}
+<section class="card empty-state">
+  <p class="empty-ico" aria-hidden="true">&#9888;</p>
+  <p>{{ message }}</p>
+  <a class="btn btn-primary mt-3" href="{{ url_for('dashboard') }}">Back to dashboard</a>
+</section>
+{% endblock %}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="description" content="{% block meta_desc %}PhishLab AI — phishing detection, threat simulation and security awareness training for teams.{% endblock %}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PhishLab AI">
+  <meta property="og:title" content="{% block og_title %}PhishLab AI — Phishing detection &amp; awareness training{% endblock %}">
+  <meta property="og:description" content="Detect phishing, train your team and prove readiness — in one dashboard.">
+  <meta name="theme-color" content="#07070f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0d1c'/%3E%3Cpath d='M32 10 54 32 32 54 10 32z' fill='none' stroke='%23b8ff3d' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M32 22 42 32 32 42 22 32z' fill='%237c5cff'/%3E%3C/svg%3E">
+  <title>{% block title %}Dashboard{% endblock %} · PHISHLAB AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- ======================= SIDEBAR ======================= -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">&#9670;</span>
+        <span class="brand-text">PHISHLAB <em>AI</em></span>
+      </div>
+
+      {% if current_user.is_authenticated %}
+      <div class="user-chip" title="{{ current_user.email }}">
+        <span class="user-avatar" aria-hidden="true">{{ current_user.display_name()[:1]|upper }}</span>
+        <div class="user-meta">
+          <p class="user-name">{{ current_user.display_name() }}</p>
+          <p class="user-mail tiny muted">{{ current_user.email }}</p>
+        </div>
+      </div>
+      <form method="post" action="{{ url_for('logout_page') }}" class="inline-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="btn btn-ghost btn-sm btn-block" type="submit">Log out</button>
+      </form>
+      {% else %}
+      <div class="auth-cta">
+        <p class="auth-cta-title">Your account</p>
+        <p class="tiny muted">Save your progress and keep analyses tied to you.</p>
+        <a class="btn btn-primary btn-sm btn-block" href="{{ url_for('signup_page') }}">Sign up</a>
+        <a class="btn btn-ghost btn-sm btn-block" href="{{ url_for('login_page') }}">Log in</a>
+        <a class="btn btn-ghost btn-sm btn-block" href="{{ url_for('pricing_page') }}">View plans</a>
+      </div>
+      {% endif %}
+
+      <nav class="nav">
+        <p class="nav-group">Product</p>
+        <a class="nav-link {{ 'is-active' if nav_section == 'pricing_page' }}"
+           href="{{ url_for('pricing_page') }}">
+          <span class="nav-ico" aria-hidden="true">&#9733;</span> Pricing
+        </a>
+
+        <p class="nav-group">Monitor</p>
+        <a class="nav-link {{ 'is-active' if nav_section == 'dashboard' }}"
+           href="{{ url_for('dashboard') }}">
+          <span class="nav-ico" aria-hidden="true">&#9632;</span> Dashboard
+        </a>
+
+        <p class="nav-group">Tools</p>
+        <a class="nav-link {{ 'is-active' if nav_section == 'analyze_page' }}"
+           href="{{ url_for('analyze_page') }}">
+          <span class="nav-ico" aria-hidden="true">&#9998;</span> Analyze Message
+        </a>
+        <a class="nav-link {{ 'is-active' if nav_section == 'url_page' }}"
+           href="{{ url_for('url_page') }}">
+          <span class="nav-ico" aria-hidden="true">&#8599;</span> URL Analyzer
+        </a>
+
+        <p class="nav-group">Train</p>
+        <a class="nav-link {{ 'is-active' if nav_section == 'campaigns_page' }}"
+           href="{{ url_for('campaigns_page') }}">
+          <span class="nav-ico" aria-hidden="true">&#9881;</span> Awareness Campaigns
+        </a>
+        <a class="nav-link {{ 'is-active' if nav_section in ('quiz_page', 'learning_page') }}"
+           href="{{ url_for('learning_page') }}">
+          <span class="nav-ico" aria-hidden="true">&#10003;</span> Quiz &amp; Learning
+        </a>
+
+        <p class="nav-group">Records</p>
+        <a class="nav-link {{ 'is-active' if nav_section == 'history_page' }}"
+           href="{{ url_for('history_page') }}">
+          <span class="nav-ico" aria-hidden="true">&#8981;</span> Recent Activity
+        </a>
+        <a class="nav-link {{ 'is-active' if nav_section == 'about_page' }}"
+           href="{{ url_for('about_page') }}">
+          <span class="nav-ico" aria-hidden="true">&#8505;</span> About Project
+        </a>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="model-pill {{ 'is-ready' if model_status.trained }}">
+          <span class="dot"></span>
+          {{ 'ML model ready' if model_status.trained else 'ML model not trained' }}
+        </div>
+        <p class="tiny muted">Local demo · no data leaves this computer</p>
+      </div>
+    </aside>
+
+    <div class="sidebar-scrim" id="sidebarScrim" hidden></div>
+
+    <!-- ======================= MAIN ======================= -->
+    <div class="main">
+      {% block topbar %}
+      <header class="topbar">
+        <button class="icon-btn" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+        <div class="topbar-title">
+          <h1>{% block page_title %}Dashboard{% endblock %}</h1>
+          {% block page_subtitle %}<p class="muted">Security awareness overview</p>{% endblock %}
+        </div>
+        <div class="topbar-right">
+          {% if current_user.is_authenticated %}
+          <span class="badge badge-lime">{{ current_user.display_name() }}</span>
+          {% else %}
+          <a class="btn btn-ghost btn-sm" href="{{ url_for('login_page') }}">Log in</a>
+          <a class="btn btn-primary btn-sm" href="{{ url_for('signup_page') }}">Sign up</a>
+          {% endif %}
+          <span class="badge badge-lime">Educational · Fictional data</span>
+          <span class="badge badge-violet">TKIET Warananagar · SY B.Tech CS</span>
+        </div>
+      </header>
+      {% endblock %}
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-stack">
+            {% for category, message in messages %}
+              <div class="flash flash-{{ category }}" role="status">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <main class="content">
+        {% block content %}{% endblock %}
+      </main>
+
+      <footer class="footer">
+        {% block footer %}
+        <span>PHISHLAB AI — educational project. Rule scores are heuristics, not proof of an attack.</span>
+        {% endblock %}
+      </footer>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/vendor/chart.umd.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

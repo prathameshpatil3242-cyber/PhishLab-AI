@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Awareness Campaigns{% endblock %}
+{% block page_title %}Awareness Campaigns{% endblock %}
+{% block page_subtitle %}<p class="muted">Fictional, local-only training exercises — no e-mails are ever sent</p>{% endblock %}
+
+{% block content %}
+<section class="grid-2">
+  <article class="card">
+    <div class="card-head">
+      <h2 class="card-title">Campaign list</h2>
+      <span class="badge badge-violet">{{ campaigns|length }} total</span>
+    </div>
+
+    {% if campaigns %}
+    <table class="table">
+      <thead>
+        <tr><th>Name</th><th>Status</th><th>Scenarios</th><th>Completed</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for c in campaigns %}
+        <tr>
+          <td>
+            <strong>{{ c.name }}</strong>
+            <p class="tiny muted">{{ c.description }}</p>
+            <span class="tiny muted">{{ 'demo data' if c.source == 'demo' else 'created by you' }} · {{ c.created_at }}</span>
+          </td>
+          <td><span class="status status-{{ c.status|lower }}">{{ c.status }}</span></td>
+          <td>{{ c.scenario_count }}</td>
+          <td>
+            <span class="lime-text">{{ c.completed }}</span>/{{ c.participants or '—' }}
+            {% set pct = (c.completed * 100 / c.participants) if c.participants else 0 %}
+            <div class="progress progress-sm"><div class="progress-bar lime" style="width: {{ pct|round }}%"></div></div>
+          </td>
+          <td class="row-actions">
+            <a class="btn btn-sm btn-lime" href="{{ url_for('start_campaign', campaign_id=c.id) }}">Start quiz</a>
+            <form method="post" action="{{ url_for('delete_campaign', campaign_id=c.id) }}" class="inline-form"
+                  onsubmit="return confirm('Delete this local campaign record?');">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button class="btn btn-sm btn-ghost" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      <p>No campaigns yet. Create one on the right to get started.</p>
+    </div>
+    {% endif %}
+  </article>
+
+  <article class="card">
+    <h2 class="card-title">Create a fictional campaign</h2>
+    <p class="muted small">This only creates a record in the local database. It does not contact anyone.</p>
+
+    <form method="post" action="{{ url_for('campaigns_page') }}" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label class="field">
+        <span class="field-label">Campaign name</span>
+        <input type="text" name="name" maxlength="80" required placeholder="Freshers Email Spotting Drive">
+      </label>
+      <label class="field">
+        <span class="field-label">Description</span>
+        <textarea name="description" rows="3" maxlength="500"
+                  placeholder="Short fictional exercise set about fake login pages."></textarea>
+      </label>
+      <div class="field-row">
+        <label class="field">
+          <span class="field-label">Scenarios</span>
+          <input type="number" name="scenario_count" min="1" max="50" value="5">
+        </label>
+        <label class="field">
+          <span class="field-label">Status</span>
+          <select name="status">
+            <option>Draft</option>
+            <option>Active</option>
+            <option>Completed</option>
+          </select>
+        </label>
+      </div>
+      <button class="btn btn-primary" type="submit">Create campaign</button>
+    </form>
+
+    <div class="notice mt-3">
+      <p class="field-label">Available exercise categories</p>
+      <div class="chip-row">
+        {% for cat in categories %}
+        <span class="chip">{{ cat }}</span>
+        {% endfor %}
+      </div>
+      <a class="btn btn-ghost mt-3" href="{{ url_for('quiz_page') }}">Open the quiz →</a>
+    </div>
+  </article>
+</section>
+
+<section class="card callout">
+  <h2 class="card-title">What this module does <em>not</em> do</h2>
+  <ul class="bullets">
+    <li>It never sends phishing e-mails and never contacts external users.</li>
+    <li>It never collects passwords, OTPs or any personal information.</li>
+    <li>It never impersonates a real organisation — every scenario uses invented names and <code>.test</code>/<code>.example</code> domains.</li>
+    <li>Completion counters are local, aggregate statistics only.</li>
+  </ul>
+</section>
+{% endblock %}

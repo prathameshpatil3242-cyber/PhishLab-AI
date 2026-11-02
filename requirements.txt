@@ -1,0 +1,18 @@
+# PhishLab AI — core dependencies
+# Install with:  pip install -r requirements.txt
+# Python 3.13 (or 3.10+) recommended.
+
+Flask>=3.0,<4
+Flask-Login>=0.6
+Flask-Limiter>=3.5
+Authlib>=1.3
+requests>=2.31
+scikit-learn>=1.4
+pandas>=2.0
+numpy>=1.26
+joblib>=1.3
+pytest>=8.0
+
+# Desktop app (Windows native window + production WSGI)
+pywebview>=5.0
+waitress>=3.0

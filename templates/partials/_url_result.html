@@ -1,0 +1,57 @@
+{% set u = result %}
+<p class="result-headline {{ 'is-bad' if u.risk_score >= 55 else ('is-warn' if u.risk_score >= 25 else 'is-ok') }}">
+  {{ u.classification }}
+</p>
+<p class="small muted"><code class="url-break">{{ u.url }}</code></p>
+
+<div class="score-block">
+  <div class="score-meter">
+    <div class="score-meter-fill level-{{ u.risk_level|lower }}" style="width: {{ u.risk_score }}%"></div>
+  </div>
+  <div class="score-meta">
+    <strong>{{ u.risk_score }}/100</strong> · {{ u.risk_level }} risk
+    <span class="muted small">— educational heuristic</span>
+  </div>
+</div>
+
+<h3 class="sub-title">Parsed parts</h3>
+<table class="table table-tight">
+  <tbody>
+    <tr><th>Scheme</th><td>{{ u.parsed.scheme }}</td></tr>
+    <tr><th>Hostname</th><td><code>{{ u.parsed.hostname or '(none)' }}</code></td></tr>
+    <tr><th>Port</th><td>{{ u.parsed.port or 'default' }}</td></tr>
+    <tr><th>Path</th><td><code>{{ u.parsed.path }}</code></td></tr>
+    <tr><th>Subdomains</th><td>{{ u.parsed.subdomain_count }}</td></tr>
+    <tr><th>Length</th><td>{{ u.parsed.length }} characters</td></tr>
+  </tbody>
+</table>
+
+<h3 class="sub-title">Static checks</h3>
+<ul class="indicator-list">
+  {% for c in u.checks %}
+  <li class="indicator indicator-{{ c.status }}">
+    <div class="indicator-top">
+      <span class="status-tag status-{{ c.status }}">{{ c.status|upper }}</span>
+      <span class="indicator-name">{{ c.name }}</span>
+      {% if c.weight %}<span class="indicator-weight">+{{ c.weight }}</span>{% endif %}
+    </div>
+    <p class="small">{{ c.detail }}</p>
+    <p class="small muted">{{ c.why }}</p>
+  </li>
+  {% endfor %}
+</ul>
+
+<details class="explain">
+  <summary>How the score was calculated</summary>
+  <p class="small">{{ u.score_explanation }}</p>
+  <p class="small muted">{{ u.summary }}</p>
+</details>
+
+<h3 class="sub-title">Recommended safe action</h3>
+<ul class="rec-list">
+  {% for rec in u.recommendations %}
+  <li>{{ rec }}</li>
+  {% endfor %}
+</ul>
+
+<p class="disclaimer">{{ u.disclaimer }}</p>

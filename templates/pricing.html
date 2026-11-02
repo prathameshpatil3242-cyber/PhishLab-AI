@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% block title %}Pricing{% endblock %}
+{% block meta_desc %}Simple, transparent pricing for PhishLab AI — start free, upgrade for campaigns, seats and reporting.{% endblock %}
+{% block og_title %}Pricing · PhishLab AI{% endblock %}
+{% block topbar %}{% include "partials/_marketing_bar.html" %}{% endblock %}
+
+{% block content %}
+<div class="pricing" data-period="m">
+
+  <!-- ================= hero ================= -->
+  <section class="price-hero">
+    <span class="pill pill-lime">Pricing</span>
+    <h1 class="price-hero-title">One platform. <span class="grad-text">Three ways</span> to buy in.</h1>
+    <p class="price-hero-lead">
+      Start free, upgrade when your awareness programme grows. Every plan runs on your own
+      infrastructure — message content never leaves your network.
+    </p>
+
+    <div class="billing-toggle" role="group" aria-label="Billing period">
+      <span class="billing-pill" aria-hidden="true"></span>
+      <button type="button" class="billing-opt is-active" data-period-btn="m" aria-pressed="true">Monthly</button>
+      <button type="button" class="billing-opt" data-period-btn="y" aria-pressed="false">
+        Yearly <span class="save-badge">save 20%</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ================= plans ================= -->
+  <section class="plan-grid" id="plans">
+
+    <article class="plan reveal" style="--d:.04s">
+      <p class="plan-name">Starter</p>
+      <p class="plan-desc">For individuals and classroom use.</p>
+      <p class="plan-price">
+        <span class="plan-cur">$</span><span class="plan-amount" data-m="0" data-y="0">0</span>
+        <span class="plan-per">/ month</span>
+      </p>
+      <p class="plan-billed" data-billed-note>Free forever</p>
+      <a class="btn btn-ghost btn-block" href="{{ url_for('signup_page') }}">Start free</a>
+
+      <ul class="plan-feats">
+        <li><span class="tick-sm" aria-hidden="true">&#10003;</span> 1 seat</li>
+        <li><span class="tick-sm" aria-hidden="true">&#10003;</span> 100 message analyses / month</li>
+        <li><span class="tick-sm" aria-hidden="true">&#10003;</span> URL risk scoring</li>
+        <li><span class="tick-sm" aria-hidden="true">&#10003;</span> 1 awareness campaign</li>
+        <li><span class="tick-sm" aria-hidden="true">&#10003;</span> Quiz engine &amp; learning centre</li>
+        <li class="is-off"><span class="tick-sm" aria-hidden="true">&ndash;</span> Team readiness dashboard</li>
+        <li class="is-off"><span class="tick-sm" aria-hidden="true">&ndash;</span> SSO &amp; audit log</li>
+      </ul>
+    </article>
+
+    <article class="plan plan-featured reveal" style="--d:.12s">
+      <span class="plan-flag">Most popular</span>
+      <div class="plan-frame" aria-hidden="true"></div>
+      <div class="plan-body">
+        <p class="plan-name">Pro</p>
+        <p class="plan-desc">For security teams running real awareness programmes.</p>
+        <p class="plan-price">
+          <span class="plan-cur">$</span><span class="plan-amount" data-m="19" data-y="15">19</span>
+          <span class="plan-per">/ user / month</span>
+        </p>
+        <p class="plan-billed" data-billed-note>Billed monthly</p>
+        <a class="btn btn-primary btn-block" href="{{ url_for('signup_page') }}">Choose Pro</a>
+
+        <ul class="plan-feats">
+          <li><span class="tick-sm" aria-hidden="true">&#10003;</span> 10 seats included</li>
+          <li><span class="tick-sm" aria-hidden="true">&#10003;</span> Unlimited analyses &amp; URL checks</li>
+          <li><span class="tick-sm" aria-hidden="true">&#10003;</span> Unlimited awareness campaigns</li>
+          <li><span class="tick-sm" aria-hidden="true">&#10003;</span> Custom simulation scenarios</li>
+          <li><span class="tick-sm" aria-hidden="true">&#10003;</span> Team readiness dashboard &amp; trends</li>
+          <li><span class="tick-sm" aria-hidden="true">&#10003;</span> CSV / PDF reporting export</li>
+          <li><span class="tick-sm" aria-hidden="true">&#10003;</span> REST API access</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="plan reveal" style="--d:.2s">
+      <p class="plan-name">Business</p>
+      <p class="plan-desc">For organisations with compliance obligations.</p>
+      <p class="plan-price">
+        <span class="plan-cur">$</span><span class="plan-amount" data-m="49" data-y="39">49</span>
+        <span class="plan-per">/ user / month</span>
+      </p>
+      <p class="plan-billed" data-billed-note>Billed monthly</p>
+      <a class="btn btn-lime btn-block" href="{{ url_for('signup_page') }}">Choose Business</a>
+
+      <ul class="plan-feats">
+        <li><span class="tick-sm" aria-hidden="true">&#10003;</span> Unlimited seats</li>
+        <li><span class="tick-sm" aria-hidden="true">&#10003;</span> Everything in Pro</li>
+        <li><span class="tick-sm" aria-hidden="true">&#10003;</span> SSO / Google Workspace sign-in</li>
+        <li><span class="tick-sm" aria-hidden="true">&#10003;</span> Role-based access &amp; audit log</li>
+        <li><span class="tick-sm" aria-hidden="true">&#10003;</span> Custom detection rules &amp; policies</li>
+        <li><span class="tick-sm" aria-hidden="true">&#10003;</span> Guided onboarding</li>
+        <li><span class="tick-sm" aria-hidden="true">&#10003;</span> Priority support (next business day)</li>
+      </ul>
+    </article>
+
+  </section>
+
+  <!-- ================= trust band ================= -->
+  <section class="trust-band reveal">
+    <div class="trust-item">
+      <b class="count" data-count-to="47">0</b>
+      <span>weighted detection signals</span>
+    </div>
+    <div class="trust-item">
+      <b class="count" data-count-to="6">0</b>
+      <span>attack categories covered</span>
+    </div>
+    <div class="trust-item">
+      <b class="count" data-count-to="14">0</b>
+      <span>day Pro trial, no card</span>
+    </div>
+    <div class="trust-item">
+      <b class="count" data-count-to="100" data-suffix="%">0</b>
+      <span>runs on your infrastructure</span>
+    </div>
+  </section>
+
+  <!-- ================= comparison ================= -->
+  <section class="card compare-card reveal">
+    <div class="card-head">
+      <h2 class="card-title">Compare every plan</h2>
+      <span class="badge badge-violet">All prices in USD</span>
+    </div>
+    <div class="table-scroll">
+      <table class="table compare-table">
+        <thead>
+          <tr><th>Capability</th><th>Starter</th><th>Pro</th><th>Business</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Message phishing analysis</td><td>100 / mo</td><td>Unlimited</td><td>Unlimited</td></tr>
+          <tr><td>URL risk scoring</td><td><span class="yes">&#10003;</span></td><td><span class="yes">&#10003;</span></td><td><span class="yes">&#10003;</span></td></tr>
+          <tr><td>Awareness campaigns</td><td>1</td><td>Unlimited</td><td>Unlimited</td></tr>
+          <tr><td>Quiz &amp; learning centre</td><td><span class="yes">&#10003;</span></td><td><span class="yes">&#10003;</span></td><td><span class="yes">&#10003;</span></td></tr>
+          <tr><td>Team seats</td><td>1</td><td>10</td><td>Unlimited</td></tr>
+          <tr><td>Readiness dashboard</td><td><span class="no">&ndash;</span></td><td><span class="yes">&#10003;</span></td><td><span class="yes">&#10003;</span></td></tr>
+          <tr><td>Reporting export (CSV / PDF)</td><td><span class="no">&ndash;</span></td><td><span class="yes">&#10003;</span></td><td><span class="yes">&#10003;</span></td></tr>
+          <tr><td>REST API</td><td><span class="no">&ndash;</span></td><td><span class="yes">&#10003;</span></td><td><span class="yes">&#10003;</span></td></tr>
+          <tr><td>Custom detection rules</td><td><span class="no">&ndash;</span></td><td><span class="no">&ndash;</span></td><td><span class="yes">&#10003;</span></td></tr>
+          <tr><td>SSO &amp; audit log</td><td><span class="no">&ndash;</span></td><td><span class="no">&ndash;</span></td><td><span class="yes">&#10003;</span></td></tr>
+          <tr><td>Support</td><td>Community</td><td>E-mail</td><td>Priority</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="faq-wrap reveal">
+    <h2 class="faq-title">Questions, answered</h2>
+
+    <details class="faq-item">
+      <summary>Does my message content ever leave my network?</summary>
+      <div class="faq-body">
+        <p>No. PhishLab AI is deployed on your own infrastructure — analyses, quiz results and
+        campaign records stay in your local database. Nothing is uploaded to a third-party cloud.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is this a tool for sending real phishing e-mails?</summary>
+      <div class="faq-body">
+        <p>No. Simulations use fictional scenarios and synthetic participants only. No e-mail is
+        ever delivered to a real inbox and no credentials are ever collected.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>How does the free plan compare to Pro?</summary>
+      <div class="faq-body">
+        <p>Starter covers a single user with unlimited URL checks and a generous analysis quota —
+        enough for coursework and personal use. Pro adds seats, unlimited campaigns, the team
+        readiness dashboard and reporting.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Can I change plans or cancel later?</summary>
+      <div class="faq-body">
+        <p>Yes. Upgrades take effect immediately and downgrades at the end of the current billing
+        period. Cancel any time — your data stays exportable and is never held hostage.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Do I need a credit card for the trial?</summary>
+      <div class="faq-body">
+        <p>No card is required to start. The 14-day Pro trial unlocks every Pro feature; if you do
+        nothing, the workspace simply returns to Starter.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>What kind of support is included?</summary>
+      <div class="faq-body">
+        <p>Starter uses community documentation. Pro adds e-mail support with a two business-day
+        response. Business includes priority support and guided onboarding.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="card cta-strip reveal">
+    <div>
+      <h2 class="auth-hero-title">Ready to find out how phishable your team is?</h2>
+      <p class="muted">Create a workspace in under a minute. No card, no sales call.</p>
+    </div>
+    <div class="auth-hero-actions">
+      <a class="btn btn-lime" href="{{ url_for('signup_page') }}">Start free</a>
+      <a class="btn btn-ghost" href="{{ url_for('login_page') }}">Log in</a>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
+
+{% block footer %}{% include "partials/_marketing_footer.html" %}{% endblock %}

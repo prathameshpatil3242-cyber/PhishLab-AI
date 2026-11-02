@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Learning Centre{% endblock %}
+{% block page_title %}Learning Centre{% endblock %}
+{% block page_subtitle %}<p class="muted">Phishing awareness tips, safe examples and the interactive quiz</p>{% endblock %}
+
+{% block content %}
+<section class="cta-strip card">
+  <div>
+    <h2 class="card-title">Ready to test yourself?</h2>
+    <p class="muted small">Ten fictional scenarios with instant explanations after each answer.</p>
+  </div>
+  <a class="btn btn-lime" href="{{ url_for('quiz_page') }}">Start the awareness quiz</a>
+</section>
+
+<section class="grid-2">
+  <article class="card">
+    <h2 class="card-title">Phishing awareness tips</h2>
+    <ol class="tip-list">
+      {% for title, body in tips %}
+      <li>
+        <strong>{{ title }}</strong>
+        <p class="small muted">{{ body }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </article>
+
+  <article class="card">
+    <h2 class="card-title">Exercise categories</h2>
+    <p class="muted small">Each category groups fictional messages you can practise with.</p>
+    <div class="chip-row">
+      {% for cat in categories %}<span class="chip">{{ cat }}</span>{% endfor %}
+    </div>
+
+    <h3 class="sub-title">Why these examples matter</h3>
+    <p class="small muted">
+      Reading real phishing messages is uncomfortable and risky. The scenarios used here are
+      invented for classroom use: they copy the <em>patterns</em> attackers use (pressure,
+      fear, reward, fake verification) without copying any real campaign or organisation.
+    </p>
+
+    <h3 class="sub-title">Remember the three checks</h3>
+    <ul class="rec-list">
+      <li><strong>Who</strong> really sent it? (look at the address after @)</li>
+      <li><strong>What</strong> is it asking you to do? (password, money, attachment?)</li>
+      <li><strong>Where</strong> does the link actually go? (read the registered domain)</li>
+    </ul>
+  </article>
+</section>
+
+<section class="grid-2">
+  <article class="card card-ok">
+    <h2 class="card-title lime-text">Safe examples</h2>
+    {% for ex in safe_examples %}
+    <div class="example">
+      <p class="field-label">{{ ex.title }}</p>
+      <blockquote class="scenario scenario-ok">{{ ex.text }}</blockquote>
+      <p class="small"><strong>Why it looks fine:</strong> {{ ex.why }}</p>
+    </div>
+    {% endfor %}
+  </article>
+
+  <article class="card card-bad">
+    <h2 class="card-title">Unsafe examples</h2>
+    {% for ex in unsafe_examples %}
+    <div class="example">
+      <p class="field-label">{{ ex.title }}</p>
+      <blockquote class="scenario scenario-bad">{{ ex.text }}</blockquote>
+      <p class="small"><strong>Warning signs:</strong> {{ ex.why }}</p>
+    </div>
+    {% endfor %}
+  </article>
+</section>
+
+<section class="card">
+  <div class="card-head">
+    <h2 class="card-title">All fictional exercises</h2>
+    <a class="btn btn-primary" href="{{ url_for('quiz_page') }}">Open quiz</a>
+  </div>
+  <table class="table">
+    <thead><tr><th>#</th><th>Exercise</th><th>Category</th><th>Type</th></tr></thead>
+    <tbody>
+      {% for e in exercises %}
+      <tr>
+        <td class="muted">{{ loop.index }}</td>
+        <td>{{ e.topic }}</td>
+        <td><span class="chip">{{ e.category }}</span></td>
+        <td><span class="status {{ 'status-completed' if e.type == 'legitimate' else 'status-active' }}">{{ e.type }}</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

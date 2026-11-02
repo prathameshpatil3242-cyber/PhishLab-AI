@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Sign up{% endblock %}
+{% block meta_desc %}Create a free PhishLab AI account — phishing detection, safe simulations and awareness training for your team.{% endblock %}
+{% block og_title %}Start free · PhishLab AI{% endblock %}
+{% block topbar %}{% include "partials/_marketing_bar.html" %}{% endblock %}
+
+{% block content %}
+<section class="sell-grid">
+
+  {% with
+    eyebrow   = 'Free forever plan · no card required',
+    headline  = 'Start free. <span class="grad-text">Scale</span> when your team does.',
+    lead      = 'Create your workspace in under a minute, analyse your first suspicious message immediately, and upgrade only when you need campaigns, seats and reporting.'
+  %}
+    {% include "partials/_sell_panel.html" %}
+  {% endwith %}
+
+  <div class="sell-form-col">
+    <article class="card auth-card">
+      <h2 class="card-title">Create your account</h2>
+      <p class="muted small">Use your e-mail and a password, or sign up instantly with Google.</p>
+
+      <form method="post" action="{{ url_for('signup_page', next=request.args.get('next')) }}" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <label class="field">
+          <span class="field-label">Full name</span>
+          <input type="text" name="name" autocomplete="name" maxlength="80"
+                 placeholder="e.g. Prathamesh Kulkarni" value="{{ request.form.get('name', '') }}">
+        </label>
+
+        <label class="field">
+          <span class="field-label">E-mail address</span>
+          <input type="email" name="email" autocomplete="email" required
+                 placeholder="you@example.com" value="{{ request.form.get('email', '') }}">
+        </label>
+
+        <label class="field">
+          <span class="field-label">Password</span>
+          <input type="password" name="password" autocomplete="new-password" required
+                 minlength="8" placeholder="At least 8 characters">
+          <span class="field-hint">Use at least 8 characters. A passphrase of 3–4 unrelated words is ideal.</span>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Confirm password</span>
+          <input type="password" name="confirm" autocomplete="new-password" required
+                 minlength="8" placeholder="Repeat the password">
+        </label>
+
+        <button class="btn btn-primary btn-block" type="submit">Create free account</button>
+      </form>
+
+      <div class="auth-divider"><span>or</span></div>
+      <a class="btn btn-google btn-block" href="{{ url_for('auth_google') }}">
+        <svg class="google-ico" viewBox="0 0 24 24" aria-hidden="true" width="18" height="18">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18A10.96 10.96 0 0 0 1 12c0 1.77.43 3.45 1.18 4.94l3.66-2.84z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.16-3.16C17.45 2.1 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84C6.71 7.3 9.14 5.38 12 5.38z"/>
+        </svg>
+        Sign up with Google
+      </a>
+
+      <p class="auth-switch muted small">Already have an account?
+        <a href="{{ url_for('login_page', next=request.args.get('next')) }}">Log in</a>
+      </p>
+    </article>
+
+    <div class="plan-teaser">
+      <div class="plan-teaser-text">
+        <span class="pill pill-violet">What you get free</span>
+        <p>Unlimited message &amp; URL checks · 1 awareness campaign · quiz engine</p>
+      </div>
+      <a class="btn btn-ghost btn-sm" href="{{ url_for('pricing_page') }}">Compare plans &rarr;</a>
+    </div>
+
+    <p class="trust-row tiny muted">
+      <span>No credit card required</span><i aria-hidden="true"></i>
+      <span>Runs on your own server</span><i aria-hidden="true"></i>
+      <span>Delete your data any time</span>
+    </p>
+  </div>
+
+</section>
+{% endblock %}
+
+{% block footer %}{% include "partials/_marketing_footer.html" %}{% endblock %}

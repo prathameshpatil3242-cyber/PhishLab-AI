@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}Recent Activity{% endblock %}
+{% block page_title %}Recent Activity{% endblock %}
+{% block page_subtitle %}<p class="muted">Local log of sample analyses, quiz events and campaign changes</p>{% endblock %}
+
+{% block content %}
+<section class="grid-2">
+  <article class="card">
+    <div class="card-head">
+      <h2 class="card-title">Activity log</h2>
+      <span class="badge badge-violet">{{ activity|length }} events</span>
+    </div>
+
+    {% if activity %}
+    <div class="table-scroll">
+      <table class="table">
+        <thead><tr><th>Event</th><th>Reference</th><th>Result</th><th>Source</th><th>Time</th></tr></thead>
+        <tbody>
+          {% for row in activity %}
+          <tr>
+            <td>{{ row.type }}</td>
+            <td><code>{{ row.ref }}</code></td>
+            <td class="small">{{ row.result }}</td>
+            <td><span class="status {{ 'status-demo' if row.source == 'demo' else 'status-live' }}">{{ row.source }}</span></td>
+            <td class="tiny muted">{{ row.created_at }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state"><p>No activity recorded yet.</p></div>
+    {% endif %}
+  </article>
+
+  <article class="card">
+    <h2 class="card-title">Stored analyses</h2>
+    {% if analyses %}
+    <div class="table-scroll">
+      <table class="table table-tight">
+        <thead><tr><th>Kind</th><th>Snippet</th><th>Result</th><th>Score</th><th>Source</th></tr></thead>
+        <tbody>
+          {% for a in analyses %}
+          <tr>
+            <td>{{ a.kind }}</td>
+            <td class="small url-break">{{ a.title }}</td>
+            <td class="small">{{ a.classification }}</td>
+            <td><strong>{{ a.risk_score }}</strong></td>
+            <td><span class="status {{ 'status-demo' if a.source == 'demo' else 'status-live' }}">{{ a.source }}</span></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state"><p>No analyses stored yet.</p></div>
+    {% endif %}
+  </article>
+</section>
+
+<section class="grid-2">
+  <article class="card">
+    <h2 class="card-title">Quiz results</h2>
+    {% if quizzes %}
+    <div class="table-scroll">
+      <table class="table table-tight">
+        <thead><tr><th>Exercise</th><th>Topic</th><th>Outcome</th><th>Points</th><th>Time</th></tr></thead>
+        <tbody>
+          {% for q in quizzes %}
+          <tr>
+            <td><code>{{ q.exercise_id }}</code></td>
+            <td class="small">{{ q.topic }}</td>
+            <td><span class="status {{ 'status-completed' if q.correct else 'status-draft' }}">{{ 'correct' if q.correct else 'incorrect' }}</span></td>
+            <td>{{ q.points }}</td>
+            <td class="tiny muted">{{ q.created_at }} · {{ q.source }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state"><p>No quiz answers recorded yet.</p></div>
+    {% endif %}
+  </article>
+
+  <article class="card">
+    <h2 class="card-title">Clear demonstration records</h2>
+    <p class="muted small">
+      Two buttons, two different actions. Demonstration records are the seeded rows marked
+      <span class="status status-demo">demo</span>; your own work is marked
+      <span class="status status-live">live</span>.
+    </p>
+
+    <form method="post" action="{{ url_for('history_page') }}" class="inline-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="mode" value="demo">
+      <button class="btn btn-ghost" type="submit">Remove demo records only</button>
+    </form>
+
+    <form method="post" action="{{ url_for('history_page') }}" class="inline-form mt-3"
+          onsubmit="return confirm('Delete ALL local records? This cannot be undone.');">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="mode" value="all">
+      <button class="btn btn-danger" type="submit">Clear everything</button>
+    </form>
+
+    <div class="notice mt-3">
+      <p class="small"><strong>What is stored:</strong> a short snippet of the analysed text,
+        the classification, the score, indicator names, timestamps and synthetic participant IDs.</p>
+      <p class="small"><strong>What is never stored:</strong> passwords, OTPs, full message bodies,
+        personal details or any credentials.</p>
+    </div>
+  </article>
+</section>
+{% endblock %}
